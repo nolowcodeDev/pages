@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "git subtree push --prefix dist origin gh-pages && git push",
+    "deploy": "vite build && git add . && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages && git push",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"

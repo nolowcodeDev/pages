@@ -24,6 +24,7 @@
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
+import { useLiff } from "@/utils";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
