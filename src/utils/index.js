@@ -1,4 +1,5 @@
 import liff from "@line/liff";
+import { ref } from "vue";
 
 export const getScriptUrlById = (id) => {
   return `https://script.google.com/macros/s/${id}/exec`;
