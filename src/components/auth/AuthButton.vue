@@ -1,14 +1,8 @@
 <template>
-  <button
-    v-if="!login"
-    @click="handleAuth({ isLogin: true, provider: 'line' })"
-  >
+  <button v-if="!login" @click="handleAuth({ isLogin: true, provider: 'line' })">
     Sign In
   </button>
-  <button
-    v-if="login"
-    @click="handleAuth({ isLogin: false, provider: 'line' })"
-  >
+  <button v-else @click="handleAuth({ isLogin: false, provider: 'line' })">
     Sign Out
   </button>
 </template>

@@ -1,9 +1,7 @@
 <template>
-    <v-navigation-drawer location="left" v-model="internalDrawerOpen" name="drawer" permanent>
-        <template v-slot:prepend>
-            <v-list-item lines="two" prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
-                subtitle="Logged in" title="Jane Smith"></v-list-item>
-        </template>
+    <v-navigation-drawer v-if="!login" location="left" v-model="internalDrawerOpen" name="drawer" permanent>
+
+        <AuthProfile />
 
         <v-divider></v-divider>
 
@@ -17,8 +15,13 @@
         <v-spacer></v-spacer>
 
         <child v-slot="{ print }">
-            <v-btn prepend-icon="mdi-logout" @click="print('drawer')" rounded="0" variant="tonal" color="primary" block>
+            <v-btn v-if="login" prepend-icon="mdi-logout" @click="handleAuth({ isLogin: false, provider: 'line' })"
+                rounded="0" variant="tonal" color="error" block>
                 Sign out
+            </v-btn>
+            <v-btn v-else prepend-icon="mdi-login" @click="handleAuth({ isLogin: true, provider: 'line' })" rounded="0"
+                variant="tonal" color="primary" block>
+                Sign in
             </v-btn>
         </child>
     </v-navigation-drawer>
@@ -26,7 +29,11 @@
 
 <script setup>
 import Child from '@/components/Child.vue';
+import AuthProfile from '../auth/AuthProfile.vue';
 import { ref, watch } from 'vue';
+
+import { useAuthStore } from "@/stores/auth";
+import { storeToRefs } from "pinia";
 
 const props = defineProps({
     drawerOpen: {
@@ -38,6 +45,10 @@ const props = defineProps({
         required: true
     }
 });
+
+const auth = useAuthStore();
+const { login } = storeToRefs(auth);
+const { handleAuth } = auth;
 
 const internalDrawerOpen = ref(false);
 

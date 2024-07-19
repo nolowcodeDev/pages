@@ -1,4 +1,6 @@
-import { ref } from "vue";
+import { capitalizeFirstLetter } from "@/utils";
+
+import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", () => {
@@ -9,25 +11,34 @@ export const useAuthStore = defineStore("auth", () => {
     provider: "line",
     firstname: "siraphop",
     lastname: "nonpala",
+    avatar:
+      "https://lh3.googleusercontent.com/ogw/AF2bZyjswmdOUkMHd2tM37NyJnIQtSWZyjHJaVAigV5gFaPusw=s32-c-mo",
   };
 
-  const logout = () => {
-    login.value = !login.value;
-    if (!login.value) {
-      profile.value = {};
+  const updateFullName = () => {
+    if (profile.value.firstname && profile.value.lastname) {
+      profile.value.fullname = `${capitalizeFirstLetter(
+        profile.value.firstname
+      )} ${capitalizeFirstLetter(profile.value.lastname)}`;
     } else {
-      profile.value = { ...defaultData };
+      profile.value.fullname = "";
     }
   };
+
+  watch(profile, updateFullName, { deep: true });
 
   const handleAuth = (props) => {
+
+
     if (props.isLogin) {
       profile.value = { ...defaultData };
+      login.value = true;
+      updateFullName();
     } else {
+      login.value = false;
       profile.value = {};
     }
-    console.log("props:", props);
   };
 
-  return { login, logout, profile, handleAuth };
+  return { login, profile, handleAuth };
 });

@@ -8,6 +8,26 @@ export const getImageUrl = (name, ext) => {
   return new URL(`./assets/images/${name}.${ext}`, import.meta.url).href;
 };
 
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export const log = (props) => {
+  let message;
+
+  if (!import.meta.env.VITE_DEBUG) {
+    message = "";
+  }
+
+  if (typeof props === "string") {
+    message = props;
+  } else {
+    message = JSON.stringify(props);
+  }
+
+  return console.log(message);
+};
+
 export const useLiff = (liffId = import.meta.env.VITE_LIFF_ID) => {
   const error = ref(null);
   const liffInstance = ref(null);

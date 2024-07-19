@@ -10,6 +10,8 @@
         <v-row>
           <v-col>
             <h1>Main Content</h1>
+            <AuthModal />
+            <Overlay :loading="loading" />
             <slot />
           </v-col>
         </v-row>
@@ -21,10 +23,17 @@
 </template>
 
 <script setup>
-import Navbar from '@/components/Navbar.vue';
-import Sidebar from '@/components/Sidebar.vue';
-import Footer from '@/components/Footer.vue';
+import Navbar from '@/components/navbar/index.vue';
+import Sidebar from '@/components/sidebar/index.vue';
+import Footer from '@/components/footer/index.vue';
+import AuthModal from '@/components/auth/AuthModal.vue';
+import Overlay from '@/components/loading/Overlay.vue'
 import { ref } from 'vue';
+
+const loading = ref(true);
+setTimeout(() => {
+  loading.value = false;
+}, 3000);
 
 const drawerOpen = ref(false);
 const menuItems = ref([
